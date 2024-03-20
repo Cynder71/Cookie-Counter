@@ -1,3 +1,5 @@
+// https://github.com/Cynder71/Cookie-Counter
+
 import 'package:flutter/material.dart';
 
 
@@ -17,24 +19,30 @@ class _CookieCounterState extends State<CookieCounter> {
 
   //variable
   int _counter = 15;
+  String _message = "Someone has left 15 \ncookies in a Jar...";
 
   //method
-  void _oneMoreCookie(){
-    setState(() {
-      if(_counter<30){
-      _counter++;
+ void _cookieAnalyzer(bool isIncrement) {
+  setState(() {
+    if (isIncrement) {
+      if (_counter == 29) {
+        _message = "The Jar is full!";
+        _counter = 30;
+      } else if (_counter<30){
+        _message = "";
+        _counter++;
       }
-    });
-  }
-
-  void _oneLessCookie(){
-    setState(() {
-      if(_counter>0){
-      _counter--;     
-      } 
-    });
-  }
-
+    } else if(_counter>0) {
+      if (_counter == 1) {
+        _message = "The Jar is Empty";
+        _counter = 0;
+      } else {
+        _message = "";
+        _counter--;
+      }
+    }
+  });
+}
   //UI
   @override
   Widget build(BuildContext context){
@@ -49,7 +57,9 @@ class _CookieCounterState extends State<CookieCounter> {
             ),
             Text(
               '  The Cookie Counter App',
-              style: TextStyle(color: Colors.white), 
+              style: TextStyle(
+              color: Colors.white,
+              fontSize: 25, ),
             ),
           ],
         ),
@@ -57,12 +67,11 @@ class _CookieCounterState extends State<CookieCounter> {
       body: Container (
           decoration: const BoxDecoration(
           image: DecorationImage(
-          image: AssetImage('images/cup-tea-cookies.jpg'), 
+          image: AssetImage('images/many-cookies.jpeg'), 
           fit: BoxFit.cover, 
           )
         ),
         child: Column(
-          
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
              const Text(
@@ -71,7 +80,7 @@ class _CookieCounterState extends State<CookieCounter> {
                 fontSize: 30,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Color.fromARGB(255, 255, 255, 255),
                 ),
               ),
             Text(
@@ -86,31 +95,44 @@ class _CookieCounterState extends State<CookieCounter> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                  onPressed: _oneMoreCookie,
+                    onPressed: () => _cookieAnalyzer(false), 
+                    style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.brown,
+                    ),
+                    child: const Text(
+                    "Take a Cookie \nfrom the Jar...",
+                    style: TextStyle(
+                     fontSize: 20,
+                     color: Colors.white,
+                    fontStyle: FontStyle.italic,
+                     ),)
+                  ),
+                  ElevatedButton(
+                  onPressed: () => _cookieAnalyzer(true),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.brown, // Set background color here
+                    backgroundColor: Colors.brown,
                   ),
                   child: const Text(
                     "Put a Cookie in \nthe Jar!",
                     style: TextStyle(
                      fontSize: 20,
                      color: Colors.white,
+                     fontStyle: FontStyle.italic,
                      ),
                   ),
                 ),
-                  ElevatedButton(
-                    onPressed: _oneLessCookie, 
-                    style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.brown,
-                    ),
-                    child: const Text(
-                    "Take a Cookie \nfrom the Jar",
-                    style: TextStyle(
-                     fontSize: 20,
-                     color: Colors.white,
-                     ),
-                    )),]
+                ]
               ),
+              const SizedBox(height: 20),
+              if (_message.isNotEmpty)
+                Text(
+                  _message,
+                  style: const TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  ),
+                ),
           ],
         ),
       ),
