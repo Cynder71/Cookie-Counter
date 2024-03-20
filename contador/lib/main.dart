@@ -85,15 +85,30 @@ class _CookieCounterState extends State<CookieCounter> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(onPressed: _oneMoreCookie, child: const Text(
+                  ElevatedButton(
+                  onPressed: _oneMoreCookie,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.brown, // Set background color here
+                  ),
+                  child: const Text(
                     "Put a Cookie in \nthe Jar!",
-                    style: TextStyle(fontSize: 20),
-                    
-                    )),
-
-                  ElevatedButton(onPressed: _oneLessCookie, child: const Text(
+                    style: TextStyle(
+                     fontSize: 20,
+                     color: Colors.white,
+                     ),
+                  ),
+                ),
+                  ElevatedButton(
+                    onPressed: _oneLessCookie, 
+                    style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.brown,
+                    ),
+                    child: const Text(
                     "Take a Cookie \nfrom the Jar",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(
+                     fontSize: 20,
+                     color: Colors.white,
+                     ),
                     )),]
               ),
           ],
